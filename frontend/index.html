@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 YouTube Clips Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="bg-gray-900 text-white">
+    <nav class="flex justify-between items-center p-6 bg-gray-800 shadow-lg">
+        <span class="text-2xl font-bold">🎥 YouTube Clips Generator</span>
+        <button class="bg-red-500 hover:bg-red-600 transition px-4 py-2 rounded-lg">Logout</button>
+    </nav>
+
+
+    <div class="flex flex-col items-center transition-all 2s mt-12">
+        <h1 class="text-5xl font-bold mb-6">🎬 YouTube Clips Generator</h1>
+        <p class="text-gray-400 text-lg mb-8">Enter a YouTube URL and generate downloadable clips from the video.</p>
+
+        <div id="urlBarAndButton" class="w-full max-w-xl transition-all duration-300">
+            <div class="flex space-x-3">
+            <input type="text" id="youtubeUrl" class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="🔗 Enter YouTube URL">
+            <button id="generateBtn" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg transition">⚡ Generate Clips</button>
+            </div>
+        </div>
+
+
+
+        <h2 id="Expand" class="text-white-400 text-lg mb-8 p-4">Description <i id="expandCarat" class="fa-solid fa-caret-down"></i>
+          </h2>
+          <div id="hiddenSection" class="transition-opacity duration-300 p-4 m-4 max-w-xl rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 opacity">
+            <p>
+              The YouTube clips generator works by taking a URL, and returning a number of clips designed to be used in short form content. You can choose from multiple parameters such as average clip length, if you want subtitles, amongst many other options. Some upcoming features are as follows:
+            </p>
+            <ul>
+              <li class="m-4"><i class="fa-solid fa-caret-right"></i> Thumbnail Generation</li>
+              <li class="m-4"><i class="fa-solid fa-caret-right"></i> API for programmatic Clip Generation</li>
+              <li class="m-4"><i class="fa-solid fa-caret-right"></i> 'Shorts' mode</li>
+              <li class="m-4"><i class="fa-solid fa-caret-right"></i> And many more!</li>
+            </ul>
+            <br>
+            <p class="py-2">In addition to the features listed above, our application leverages cutting-edge web technologies to provide a seamless and intuitive experience. Our back-end is optimized for fast processing, ensuring that clip generation happens quickly even during peak usage times.
+              The user interface is designed with simplicity and ease-of-use in mind, utilizing Tailwind CSS to ensure a responsive layout that looks great on any device, whether it's a smartphone, tablet, or desktop computer. We continually iterate on our design based on user feedback.
+              Moreover, the generator supports advanced customization options. 
+            </p>
+            <p class="py-2">Users can tweak parameters such as clip duration, resolution, and even add watermark overlays to match their branding needs. This flexibility makes our tool perfect for both casual users and professional content creators.
+              We are committed to continuous improvement, regularly updating the application with new functionalities and performance enhancements. Our mission is to provide an efficient and effective solution for anyone looking to create engaging video clips from YouTube content.
+            </p>
+            <p>Follow us on <a class="underline hover:blue" href="https://github.com/jacklavelle286/YouTube-Clips-Generator-application" target="_blank" rel="noopener noreferrer">GitHub</a> for more information on the technology, upcoming feature releases and more. </p>
+          </div>
+          
+
+
+    
+        <div class="mt-12 w-full max-w-xl" id="clipsContainer"></div>
+    </div>
+</body>
+<script src="./main.js"></script>
+</html>
