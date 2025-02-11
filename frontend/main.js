@@ -1,7 +1,7 @@
-const toggleDarkModeBtn = document.getElementById("darkMode");
 let isDarkMode = false;
 
-const toggleDarkMode = () => {
+
+const toggleDarkModeBtn = document.getElementById("darkMode").addEventListener("click", function() {
   if (!isDarkMode) {
     document.body.classList.replace("bg-white", "bg-gray-900");
     document.getElementById("nav").classList.add("text-white", "bg-blue-600");
@@ -20,23 +20,12 @@ const toggleDarkMode = () => {
     document.getElementById("Expand").classList.remove("text-white");
     isDarkMode = false;
   }
-};
-
-toggleDarkModeBtn.addEventListener("click", toggleDarkMode);
+});
 
 
-toggleDarkModeBtn.addEventListener("click", toggleDarkMode)
-
-const toggleExpandBtn = document.getElementById("Expand");
-const hiddenSection = document.getElementById("hiddenSection");
-const upCarat = document.getElementById("expandCarat");
-const urlBarAndButton = document.getElementById("urlBarAndButton");
-
-const toggleParagraph = () => {
+const toggleExpandBtn = document.getElementById("Expand").addEventListener("click", function() {
   hiddenSection.classList.toggle('invisible');
+  const upCarat = document.getElementById("expandCarat");
   upCarat.classList.toggle('fa-caret-up');
   upCarat.classList.toggle('fa-caret-down');
-
-};
-
-toggleExpandBtn.addEventListener("click", toggleParagraph);
+});
