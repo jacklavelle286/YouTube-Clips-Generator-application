@@ -1,31 +1,42 @@
-let toggleExpandBtn = document.getElementById("Expand");
-let hiddenSection = document.getElementById("hiddenSection"); 
-let upCarat = document.getElementById("expandCarat");
-let urlBarAndButton = document.getElementById("urlBarAndButton");
-let isOpen = true;
+const toggleDarkModeBtn = document.getElementById("darkMode");
+let isDarkMode = false;
 
-
-
-const expandParagraph = () => {
-  hiddenSection.classList.remove('invisible');
-  upCarat.classList.remove('fa-caret-up');
-  upCarat.classList.add('fa-caret-down');
-  urlBarAndButton.classList.add()
-  isOpen = true;
-};
-
-const retractParagraph = () => {
-  hiddenSection.classList.add('invisible');
-  upCarat.classList.remove('fa-caret-down');
-  upCarat.classList.add('fa-caret-up');
-  isOpen = false;
-};
-
-// Toggle functionality: check state on each click
-toggleExpandBtn.onclick = () => {
-  if (isOpen) {
-    retractParagraph();
+const toggleDarkMode = () => {
+  if (!isDarkMode) {
+    document.body.classList.replace("bg-white", "bg-gray-900");
+    document.getElementById("nav").classList.add("text-white", "bg-blue-600");
+    document.getElementById("toDarkModeMoon").classList.replace("fa-solid", "fa-regular");
+    document.getElementById("main-txt").classList.add("text-white");
+    document.getElementById("main-p").classList.add("text-white");
+    document.getElementById("Expand").classList.add("text-white");
+    isDarkMode = true;
   } else {
-    expandParagraph();
+
+    document.body.classList.replace("bg-gray-900", "bg-white");
+    document.getElementById("nav").classList.remove("text-white", "bg-blue-600");
+    document.getElementById("toDarkModeMoon").classList.replace("fa-regular", "fa-solid");
+    document.getElementById("main-txt").classList.remove("text-white");
+    document.getElementById("main-p").classList.remove("text-white");
+    document.getElementById("Expand").classList.remove("text-white");
+    isDarkMode = false;
   }
 };
+
+toggleDarkModeBtn.addEventListener("click", toggleDarkMode);
+
+
+toggleDarkModeBtn.addEventListener("click", toggleDarkMode)
+
+const toggleExpandBtn = document.getElementById("Expand");
+const hiddenSection = document.getElementById("hiddenSection");
+const upCarat = document.getElementById("expandCarat");
+const urlBarAndButton = document.getElementById("urlBarAndButton");
+
+const toggleParagraph = () => {
+  hiddenSection.classList.toggle('invisible');
+  upCarat.classList.toggle('fa-caret-up');
+  upCarat.classList.toggle('fa-caret-down');
+
+};
+
+toggleExpandBtn.addEventListener("click", toggleParagraph);
