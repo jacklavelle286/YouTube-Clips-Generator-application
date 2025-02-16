@@ -1,23 +1,41 @@
 let isDarkMode = false;
-
+const solidBlue = "bg-blue-600"
+const solidGrey = "bg-gray-900"
 
 const toggleDarkModeBtn = document.getElementById("darkMode").addEventListener("click", function() {
   if (!isDarkMode) {
-    document.body.classList.replace("bg-white", "bg-gray-900");
-    document.getElementById("nav").classList.add("text-white", "bg-blue-600");
+    document.body.classList.replace("bg-white", solidGrey);
+    document.body.classList.replace("text-black", "text-white")
+    document.querySelectorAll("p").forEach(p => {
+      p.style.color = "white";
+    });
+    document.querySelectorAll("h2").forEach(p => {
+      p.style.color = "white";
+
+    });
+    document.getElementById("nav").classList.add("text-white", solidBlue);
     document.getElementById("toDarkModeMoon").classList.replace("fa-solid", "fa-regular");
-    document.getElementById("main-txt").classList.add("text-white");
-    document.getElementById("main-p").classList.add("text-white");
-    document.getElementById("Expand").classList.add("text-white");
+    document.querySelectorAll("div").forEach(p => {
+      p.style.color = "white";
+      p.classList.add(solidGrey); 
+    });
+
     isDarkMode = true;
   } else {
-
-    document.body.classList.replace("bg-gray-900", "bg-white");
-    document.getElementById("nav").classList.remove("text-white", "bg-blue-600");
+    document.body.classList.replace(solidGrey, "bg-white");
+    document.body.classList.replace("text-white", "text-black")
+    document.querySelectorAll("p").forEach(p => {
+      p.style.color = "black";
+    });
+    document.querySelectorAll("h2").forEach(p => {
+      p.style.color = "black";
+    });
+    document.getElementById("nav").classList.remove("text-white", solidBlue);
     document.getElementById("toDarkModeMoon").classList.replace("fa-regular", "fa-solid");
-    document.getElementById("main-txt").classList.remove("text-white");
-    document.getElementById("main-p").classList.remove("text-white");
-    document.getElementById("Expand").classList.remove("text-white");
+    document.querySelectorAll("div").forEach(p => {
+      p.style.color = "black";
+      p.classList.remove(solidGrey); 
+    });
     isDarkMode = false;
   }
 });
@@ -29,3 +47,5 @@ const toggleExpandBtn = document.getElementById("Expand").addEventListener("clic
   upCarat.classList.toggle('fa-caret-up');
   upCarat.classList.toggle('fa-caret-down');
 });
+
+
