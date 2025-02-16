@@ -2,7 +2,7 @@ FROM python:3-alpine
 
 WORKDIR /frontend
 
-COPY /frontend .
+COPY ../frontend .
 
 EXPOSE 80
 
