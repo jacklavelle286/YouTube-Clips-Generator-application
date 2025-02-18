@@ -9,31 +9,23 @@ on:
 env:
   ECR_REPO: "438465154544.dkr.ecr.eu-west-2.amazonaws.com/frontend_ecr_repo"
   REGION: "eu-west-2"
-  OIDC_ROLE_ARN: "arn:aws:iam::438465154544:role/testingok"
-
+  OIDC_ROLE_ARN: "arn:aws:iam::438465154544:role/github-actions-role"
 
 jobs:
+  build_and_assume:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build ../ --file Dockerfile --tag youtube-clips-frontend:$(date +%s)
-  AssumeRoleAndCallIdentity:
-    runs-on: ubuntu-latest
-    steps:
-      - name: configure aws credentials
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: ${{ env.OIDC_ROLE_ARN }}
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.REGION }}
+
       - name: Sts GetCallerIdentity
-        run: |
-          aws sts get-caller-identity
+        run: aws sts get-caller-identity
 
-
-
-
-  
+      - name: Build the Docker image
+        run: docker build ../ --file Dockerfile --tag youtube-clips-frontend:$(date +%s)
