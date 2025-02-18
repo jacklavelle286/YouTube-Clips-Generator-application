@@ -9,7 +9,7 @@ on:
 env:
   ECR_REPO: "438465154544.dkr.ecr.eu-west-2.amazonaws.com/frontend_ecr_repo"
   REGION: "eu-west-2"
-  OIDC_ROLE_ARN: "arn:aws:iam::438465154544:role/github-actions-role"
+  OIDC_ROLE_ARN: "arn:aws:iam::438465154544:role/OIDCRole"
 
 permissions:
   id-token: write
