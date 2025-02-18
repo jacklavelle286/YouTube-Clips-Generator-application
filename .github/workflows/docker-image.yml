@@ -12,31 +12,57 @@ env:
   OIDC_ROLE_ARN: "arn:aws:iam::438465154544:role/github-actions-role"
 
 permissions:
-      id-token: write 
-      contents: read 
+  id-token: write
+  contents: read
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ steps.build.outputs.image_tag }}
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build ../ --file Dockerfile --tag youtube-clips-frontend:$(date +%s)
-  AssumeRoleAndCallIdentity:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        id: build
+        run: |
+          # Create a unique tag using the current timestamp
+          IMAGE_TAG=$(date +%s)
+          echo "Building Docker image with tag $IMAGE_TAG"
+          docker build ../ --file Dockerfile --tag youtube-clips-frontend:$IMAGE_TAG
+          # Set the output so later jobs can use it
+          echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+  assume_role:
+    name: Assume Role and Verify AWS Identity
     runs-on: ubuntu-latest
+    needs: build
     steps:
-      - name: configure aws credentials
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: ${{ env.OIDC_ROLE_ARN }}
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.REGION }}
-      - name: Sts GetCallerIdentity
+
+      - name: STS Get Caller Identity
+        run: aws sts get-caller-identity
+
+  push_to_ecr:
+    name: Push Docker Image to ECR
+    runs-on: ubuntu-latest
+    needs: [build, assume_role]
+    steps:
+      - name: Login to ECR
         run: |
-          aws sts get-caller-identity
+          # Retrieve the image tag from the build job's outputs
+          IMAGE_TAG=${{ needs.build.outputs.image_tag }}
+          echo "Logging in to ECR with image tag $IMAGE_TAG"
+          aws ecr get-login-password --region ${{ env.REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REPO }}
 
-
-
-
-  
+      - name: Tag and Push Docker Image
+        run: |
+          IMAGE_TAG=${{ needs.build.outputs.image_tag }}
+          echo "Tagging image with $IMAGE_TAG and pushing to ECR"
+          docker tag youtube-clips-frontend:$IMAGE_TAG ${{ env.ECR_REPO }}:$IMAGE_TAG
+          docker push ${{ env.ECR_REPO }}:$IMAGE_TAG
