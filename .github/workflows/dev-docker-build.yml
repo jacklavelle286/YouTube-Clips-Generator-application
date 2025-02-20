@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
-  ECR_REPO_ACCOUNT: "559050248035"
+  ECR_REPO_ACCOUNT: "908027392835"
   REGION: "eu-west-2"
 
 permissions:
@@ -24,7 +24,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
-          role-to-assume: "arn:aws:iam::${{ env.ECR_REPO_ACCOUNT }}:role/OIDCRole"
+          role-to-assume: "arn:aws:iam::${{ env.OIDC_ROLE_ARN }}:role/OIDCRole"
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.REGION }}
 
