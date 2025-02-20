@@ -7,8 +7,9 @@ on:
     branches: [ "main" ]
 
 env:
-  ECR_REPO_ACCOUNT: "908027392835"
+  ECR_REPO_ACCOUNT: "559050248035"
   REGION: "eu-west-2"
+  OIDC_ROLE_ARN: "arn:aws:iam::559050248035:role/OIDCRole"
 
 permissions:
   id-token: write
