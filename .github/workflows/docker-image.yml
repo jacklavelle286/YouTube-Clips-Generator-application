@@ -7,16 +7,16 @@ on:
     branches: [ "main" ]
 
 env:
-  ECR_REPO_ACCOUNT: "438465154544"
-  ECR_REPO: "438465154544.dkr.ecr.eu-west-2.amazonaws.com/frontend_ecr_repo"
+  ECR_REPO_ACCOUNT: "559050248035"
+  ECR_REPO: "559050248035.dkr.ecr.eu-west-2.amazonaws.com/frontend_ecr_repo"
   REGION: "eu-west-2"
-  OIDC_ROLE_ARN: "arn:aws:iam::438465154544:role/OIDCRole"
+  OIDC_ROLE_ARN: "arn:aws:iam::559050248035:role/OIDCRole"
 
 permissions:
   id-token: write
   contents: read
 
-  
+
 jobs:
   build_and_push:
     name: Build and Push Docker Image to ECR
