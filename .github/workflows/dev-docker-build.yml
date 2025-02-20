@@ -7,9 +7,8 @@ on:
     branches: [ "main" ]
 
 env:
-  ECR_REPO: "438465154544.dkr.ecr.eu-west-2.amazonaws.com/frontend_ecr_repo"
+  ECR_REPO_ACCOUNT: "559050248035"
   REGION: "eu-west-2"
-  OIDC_ROLE_ARN: "arn:aws:iam::438465154544:role/OIDCRole"
 
 permissions:
   id-token: write
@@ -25,7 +24,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
-          role-to-assume: ${{ env.OIDC_ROLE_ARN }}
+          role-to-assume: "arn:aws:iam::${{ env.ECR_REPO_ACCOUNT }}:role/OIDCRole"
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.REGION }}
 
@@ -52,5 +51,5 @@ jobs:
         run: |
           IMAGE_TAG=${{ steps.build.outputs.image_tag }}
           echo "Tagging image with $IMAGE_TAG and pushing to ECR"
-          docker tag youtube-clips-frontend:$IMAGE_TAG ${{ env.ECR_REPO }}:$IMAGE_TAG
-          docker push ${{ env.ECR_REPO }}:$IMAGE_TAG
+          docker tag youtube-clips-frontend:$IMAGE_TAG ${{ env.ECR_REPO_ACCOUNT }}.dkr.ecr.eu-west-2.amazonaws.com/frontend_ecr_repo:$IMAGE_TAG
+          docker push ${{ env.ECR_REPO_ACCOUNT }}.dkr.ecr.eu-west-2.amazonaws.com/frontend_ecr_repo:$IMAGE_TAG
