@@ -37,16 +37,34 @@
     <section class="mb-12">
       <h2 class="text-2xl font-semibold mb-4">Hosting & Infrastructure</h2>
       <p id="main-p" class="text-gray-700">
-        <strong>Placeholder:</strong> Provide details about the hosting provider, server setup, CDN usage, and any other relevant infrastructure details here.
+        The frontend is hosted on AWS as a microservice based architecture using on Amazon EKS. The backend consists of Amazon S3 for initial video storage, And
+        various backend microservices include another Amazon EKS cluster and a state machine running some AWS Lambda functions which carry out the video processing. Video assets are also stored in DynamoDB
+         Please find the architectural diagram below. 
+         The Application flow is as follows:
       </p>
+      <br>
+      <ol class="list-decimal list-inside">
+        <li>User provides YouTube link to the frontend.</li>
+        <li>This video is downloaded locally (so the user can watch this video on the webpage) and sent to S3 via javascript SDK via frontend (multipart upload).</li>
+        <li>When the video is uploaded to S3, it triggers an S3 event notification which in turn triggers a Step functions workflow via Amazon EventBridge.</li>
+        <li>This Step Functions Workflow passes the video to an Amazon Bedrock Model to take video and analyze for segments, returning timestamps to a Lambda Function.</li>
+        <li>This Lambda function uses ffmpeg to generate clips, once the job is done it returns the clips to returns to Amazon S3, and stores pointers to those clips in DynamoDB for retrieval later if required. </li>
+        <li>User is then able to download the clips via the front end via presigned URL.</li>
+      </ol>
     </section>
-    
+
 
     <section class="mb-12">
       <h2 class="text-2xl font-semibold mb-4">Tech Stack</h2>
-      <p class="text-gray-700">
-        <strong>Placeholder:</strong> List and describe the technologies used in this project (e.g., frontend frameworks, backend services, databases, APIs, etc.). Include any architectural patterns or additional libraries you use.
+      <p class="text-gray-700"> The teck stack involved is as follows:
       </p>
+      <ul class="list-disc list-inside">
+        <li>No frontend JavaScript framework (Vanilla JS)</li>
+        <li>Tailwind for styling.</li>
+        <li>Docker as container runtime</li>
+        <li>Lambda Function written in Python 3.12</li>
+        <li>Kubernetes hosted on Amazon EKS for the compute</li>
+      </ul>
     </section>
     
 
@@ -54,23 +72,28 @@
       <h2 class="text-2xl font-semibold mb-4">Source Code Repositories</h2>
       <ul class="list-disc list-inside text-gray-700">
         <li>
-          <a href="https://github.com/yourusername/frontend-repo" target="_blank" class="text-blue-500 hover:underline">
-            Frontend Repository
+          <a href="https://github.com/jacklavelle286/YouTube-Clips-Generator-application" target="_blank" class="text-blue-500 hover:underline">
+            Code Repository
           </a>
         </li>
         <li>
-          <a href="https://github.com/yourusername/backend-repo" target="_blank" class="text-blue-500 hover:underline">
-            Backend Repository
+          <a href="https://github.com/jacklavelle286/YouTube-Clips-Generator-infrastructure" target="_blank" class="text-blue-500 hover:underline">
+            Infrastructure Repository
           </a>
         </li>
       </ul>
     </section>
 
     <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-4">Additional Information</h2>
-      <p class="text-gray-700">
-        <strong>Placeholder:</strong> Include any further details about future enhancements, maintenance plans, or other technical insights relevant to the project.
+      <h2 class="text-2xl font-semibold mb-4">Road Map Information</h2>
+      <p class="text-gray-700"> The road map includes items such as:
       </p>
+      <ul class="list-disc list-inside">
+        <li>Ability to generate clip video descriptions</li>
+        <li>Thumbnail Generation</li>
+        <li>Integration with the YouTube API for easy clip uploading</li>
+        <li>Many more ideas!</li>
+        <p>If you do have any requests, consider creating a Issue on the application code GitHub. </p>
     </section>
   </main>
 
